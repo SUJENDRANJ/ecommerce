@@ -1,7 +1,7 @@
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import {ShoppingCartState} from "../context/context";
-import {Link} from "react-router-dom";
-import {filterBySearch} from "../slices/filterSlice";
+import { Link } from "react-router-dom";
+import { filterBySearch } from "../slices/filterSlice";
 
 const Header = () => {
   // const {
@@ -11,13 +11,13 @@ const Header = () => {
   // } = ShoppingCartState();
 
   const filterDispatch = useDispatch();
-  const {cart} = useSelector((state) => state.cart);
-  const {searchQuery} = useSelector((state) => state.filter);
+  const { cart } = useSelector((state) => state.cart);
+  const { searchQuery } = useSelector((state) => state.filter);
 
   return (
     <nav className="h-5 flex items-center justify-between">
       <Link to="/">
-        <h2 className="text-2xl font-mono">RoadsideCoder Store</h2>
+        <h2 className="text-2xl font-mono">My Store</h2>
       </Link>
       <input
         type="text"
