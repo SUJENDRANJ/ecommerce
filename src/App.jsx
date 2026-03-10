@@ -1,12 +1,13 @@
 /* Implement Redux Toolkit in Shopping Cart App */
 
 import "./App.css";
-import {RouterProvider, createBrowserRouter} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AppLayout from "./components/app-layout";
-import Home from "./pages/home";
-import Cart from "./pages/cart";
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store";
+
+const Home = React.lazy(() => import("./pages/home"));
+const Cart = React.lazy(() => import("./pages/cart"));
 
 const router = createBrowserRouter([
   {

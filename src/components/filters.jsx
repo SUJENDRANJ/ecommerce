@@ -9,23 +9,7 @@ import {
   clearFilters,
 } from "../slices/filterSlice";
 
-// const filterMap = {
-//   sort: "SORT_BY_PRICE",
-//   byRating: "FILTER_BY_RATING",
-//   byStock: "FILTER_BY_STOCK",
-//   searchQuery: "FILTER_BY_SEARCH",
-// };
-
-const filterMap = {
-  sort: sortByPrice,
-  byRating: filterByRating,
-  byStock: filterByStock,
-  searchQuery: filterBySearch,
-};
-
 const Filters = () => {
-  // const {filterState, filterDispatch} = ShoppingCartState();
-
   const filterDispatch = useDispatch();
   const filterState = useSelector((state) => state.filter);
   const { byStock, sort, byRating } = filterState;
@@ -39,13 +23,7 @@ const Filters = () => {
           className="mr-2"
           id="Ascending"
           name="sort"
-          onChange={() =>
-            // filterDispatch({
-            //   type: "SORT_BY_PRICE",
-            //   payload: "lowToHigh",
-            // })
-            filterDispatch(sortByPrice("lowToHigh"))
-          }
+          onChange={() => filterDispatch(sortByPrice("lowToHigh"))}
           checked={sort === "lowToHigh" ? true : false}
         />
         <label htmlFor="Ascending">Ascending</label>
@@ -56,13 +34,7 @@ const Filters = () => {
           className="mr-2"
           id="descending"
           name="sort"
-          onChange={() =>
-            // filterDispatch({
-            //   type: "SORT_BY_PRICE",
-            //   payload: "highToLow",
-            // })
-            filterDispatch(sortByPrice("highToLow"))
-          }
+          onChange={() => filterDispatch(sortByPrice("highToLow"))}
           checked={sort === "highToLow" ? true : false}
         />
         <label htmlFor="descending">Descending</label>
@@ -74,13 +46,7 @@ const Filters = () => {
           className="mr-2"
           id="outofstock"
           name="outofstock"
-          onChange={() =>
-            // filterDispatch({
-            //   type: "FILTER_BY_STOCK",
-            //   payload: !byStock,
-            // })
-            filterDispatch(filterByStock(!byStock))
-          }
+          onChange={() => filterDispatch(filterByStock(!byStock))}
           checked={byStock}
         />
         <label htmlFor="outofstock">Include Out of Stock</label>
@@ -90,23 +56,12 @@ const Filters = () => {
         <label className="pr-2">Rating</label>
         <StarRating
           rating={byRating}
-          onChange={(i) =>
-            // filterDispatch({
-            //   type: "FILTER_BY_RATING",
-            //   payload: i,
-            // })
-            filterDispatch(filterByRating(i))
-          }
+          onChange={(i) => filterDispatch(filterByRating(i))}
         />
       </span>
       <button
         className="bg-slate-500 text-white rounded-sm"
-        onClick={() =>
-          // filterDispatch({
-          //   type: "CLEAR_FILTERS",
-          // })
-          filterDispatch(clearFilters())
-        }
+        onClick={() => filterDispatch(clearFilters())}
       >
         Clear Filters
       </button>

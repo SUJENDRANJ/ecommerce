@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Pagination from "../components/pagination";
 import StarRating from "../components/star-rating";
 import Filters from "../components/filters";
+import SkeletonProduct from "../components/skeleton-product";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
@@ -20,7 +21,7 @@ const Home = () => {
   // } = ShoppingCartState();
 
   const dispatch = useDispatch();
-  const { products, cart } = useSelector((state) => state.cart);
+  const { products, cart, status } = useSelector((state) => state.cart);
   const { sort, byStock, byRating, searchQuery } = useSelector(
     (state) => state.filter,
   );
@@ -65,41 +66,51 @@ const Home = () => {
         {/* Filters */}
         <Filters />
         {/* Products */}
-        {filteredProducts.length > 0 && (
+        {status === "loading" ? (
           <div className="products w-full">
-            {filteredProducts?.slice(page * 10 - 10, page * 10).map((prod) => {
-              const inCart = cart.some((p) => p.id === prod.id);
-
-              return (
-                <span className={`products__single`} key={prod.id}>
-                  <img src={prod.thumbnail} alt={prod.title} />
-                  <span>{prod.title}</span>
-                  <hr />
-                  <span>$ {prod.price}</span>
-                  <StarRating rating={prod.rating} />
-                  <button
-                    className={`px-2 py-1 mt-2 ${
-                      !inCart ? "bg-orange-400" : "bg-blue-400"
-                    } border-none rounded-sm disabled:opacity-50`}
-                    disabled={!prod.stock}
-                    onClick={() =>
-                      dispatch(
-                        inCart
-                          ? removeFromCart(prod)
-                          : addToCart({ ...prod, qty: 1 }),
-                      )
-                    }
-                  >
-                    {prod.stock
-                      ? !inCart
-                        ? "Add to Cart"
-                        : "Remove from Cart"
-                      : "Out of Stock"}
-                  </button>
-                </span>
-              );
-            })}
+            {[...Array(10)].map((_, i) => (
+              <SkeletonProduct key={i} />
+            ))}
           </div>
+        ) : (
+          filteredProducts.length > 0 && (
+            <div className="products w-full">
+              {filteredProducts
+                ?.slice(page * 10 - 10, page * 10)
+                .map((prod) => {
+                  const inCart = cart.some((p) => p.id === prod.id);
+
+                  return (
+                    <span className={`products__single`} key={prod.id}>
+                      <img src={prod.thumbnail} alt={prod.title} />
+                      <span>{prod.title}</span>
+                      <hr />
+                      <span>$ {prod.price}</span>
+                      <StarRating rating={prod.rating} />
+                      <button
+                        className={`px-2 py-1 mt-2 ${
+                          !inCart ? "bg-orange-400" : "bg-blue-400"
+                        } border-none rounded-sm disabled:opacity-50`}
+                        disabled={!prod.stock}
+                        onClick={() =>
+                          dispatch(
+                            inCart
+                              ? removeFromCart(prod)
+                              : addToCart({ ...prod, qty: 1 }),
+                          )
+                        }
+                      >
+                        {prod.stock
+                          ? !inCart
+                            ? "Add to Cart"
+                            : "Remove from Cart"
+                          : "Out of Stock"}
+                      </button>
+                    </span>
+                  );
+                })}
+            </div>
+          )
         )}
       </div>
 
