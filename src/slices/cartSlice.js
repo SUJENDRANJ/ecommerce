@@ -1,16 +1,16 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchProductsAsync = createAsyncThunk(
   "cart/fetchProducts",
   async (_, thunkAPI) => {
     try {
-      const res = await fetch(`/products.json`);
+      const res = await fetch(`https://dummyjson.com/products`);
       const data = await res.json();
       return data.products;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const cartSlice = createSlice({
@@ -23,13 +23,13 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart(state, action) {
-      state.cart.push({...action.payload, qty: 1});
+      state.cart.push({ ...action.payload, qty: 1 });
     },
     removeFromCart(state, action) {
       state.cart = state.cart.filter((item) => item.id !== action.payload.id);
     },
     changeCartQty(state, action) {
-      const {id, qty} = action.payload;
+      const { id, qty } = action.payload;
       const product = state.cart.find((item) => item.id === id);
       if (product) {
         product.qty = qty;
@@ -52,5 +52,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const {addToCart, removeFromCart, changeCartQty} = cartSlice.actions;
+export const { addToCart, removeFromCart, changeCartQty } = cartSlice.actions;
 export default cartSlice.reducer;

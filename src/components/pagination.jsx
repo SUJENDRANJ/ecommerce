@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-const Pagination = ({products, page, setPage, maxVisiblePages = 5}) => {
+const Pagination = ({ products, page, setPage }) => {
   const totalPages = Math.ceil(products.length / 10);
 
   const selectPageHandler = (selectedPage) => {
@@ -29,29 +29,8 @@ const Pagination = ({products, page, setPage, maxVisiblePages = 5}) => {
   const renderPageNumbers = () => {
     const pageNumbers = [];
 
-    if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(renderPageKey(i));
-      }
-    } else {
-      // truncation logic
-      const startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
-      const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-      if (startPage > 1) {
-        if (startPage > 2) pageNumbers.push(renderPageKey(1));
-        pageNumbers.push(renderPageKey("...", "ellipsis-start"));
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(renderPageKey(i));
-      }
-
-      if (endPage < totalPages) {
-        pageNumbers.push(renderPageKey("...", "ellipsis-end"));
-        if (endPage < totalPages - 1)
-          pageNumbers.push(renderPageKey(totalPages));
-      }
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(renderPageKey(i));
     }
 
     return pageNumbers;

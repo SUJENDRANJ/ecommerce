@@ -1,8 +1,6 @@
-import {useSearchParams} from "react-router-dom";
 // import {ShoppingCartState} from "../context/context";
 import StarRating from "./star-rating";
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   filterByRating,
   sortByPrice,
@@ -30,25 +28,7 @@ const Filters = () => {
 
   const filterDispatch = useDispatch();
   const filterState = useSelector((state) => state.filter);
-  const {byStock, sort, byRating} = filterState;
-
-  let [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    if (searchParams.size) {
-      searchParams.forEach((value, key) => {
-        // filterDispatch({
-        //   type: filterMap[key],
-        //   payload: value,
-        // });
-        filterDispatch(filterMap[key](value));
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    setSearchParams(filterState);
-  }, [filterState]);
+  const { byStock, sort, byRating } = filterState;
 
   return (
     <div className="flex flex-col w-96 gap-2">

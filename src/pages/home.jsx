@@ -1,9 +1,9 @@
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 // import {ShoppingCartState} from "../context/context";
 import Pagination from "../components/pagination";
 import StarRating from "../components/star-rating";
 import Filters from "../components/filters";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
   fetchProductsAsync,
@@ -20,9 +20,9 @@ const Home = () => {
   // } = ShoppingCartState();
 
   const dispatch = useDispatch();
-  const {products, cart} = useSelector((state) => state.cart);
-  const {sort, byStock, byRating, searchQuery} = useSelector(
-    (state) => state.filter
+  const { products, cart } = useSelector((state) => state.cart);
+  const { sort, byStock, byRating, searchQuery } = useSelector(
+    (state) => state.filter,
   );
 
   useEffect(() => {
@@ -39,18 +39,18 @@ const Home = () => {
     }
 
     if (!byStock) {
-      filteredProducts = filteredProducts.filter((prod) => prod.inStock);
+      filteredProducts = filteredProducts.filter((prod) => prod.stock);
     }
 
     if (byRating) {
       filteredProducts = filteredProducts.filter(
-        (prod) => prod.rating >= byRating
+        (prod) => prod.rating >= byRating,
       );
     }
 
     if (searchQuery) {
       filteredProducts = filteredProducts.filter((prod) =>
-        prod.title.toLowerCase().includes(searchQuery.toLowerCase())
+        prod.title.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -81,22 +81,16 @@ const Home = () => {
                     className={`px-2 py-1 mt-2 ${
                       !inCart ? "bg-orange-400" : "bg-blue-400"
                     } border-none rounded-sm disabled:opacity-50`}
-                    disabled={!prod.inStock}
-                    // onClick={() =>
-                    //   dispatch({
-                    //     type: inCart ? "REMOVE_FROM_CART" : "ADD_TO_CART",
-                    //     payload: prod,
-                    //   })
-                    // }
+                    disabled={!prod.stock}
                     onClick={() =>
                       dispatch(
                         inCart
                           ? removeFromCart(prod)
-                          : addToCart({...prod, qty: 1})
+                          : addToCart({ ...prod, qty: 1 }),
                       )
                     }
                   >
-                    {prod.inStock
+                    {prod.stock
                       ? !inCart
                         ? "Add to Cart"
                         : "Remove from Cart"
