@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-// import {ShoppingCartState} from "../context/context";
 import Pagination from "../components/pagination";
 import StarRating from "../components/star-rating";
 import Filters from "../components/filters";
@@ -13,12 +12,6 @@ import {
 
 const Home = () => {
   const [page, setPage] = useState(1);
-
-  // const {
-  //   state: {products, cart},
-  //   dispatch,
-  //   filterState: {sort, byStock, byRating, searchQuery},
-  // } = ShoppingCartState();
 
   const dispatch = useDispatch();
   const { products, cart, status } = useSelector((state) => state.cart);

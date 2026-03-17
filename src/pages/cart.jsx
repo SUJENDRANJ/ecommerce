@@ -1,21 +1,15 @@
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StarRating from "../components/star-rating";
-// import {ShoppingCartState} from "../context/context";
-import {removeFromCart} from "../slices/cartSlice";
+import { removeFromCart } from "../slices/cartSlice";
 
 const Cart = () => {
-  // const {
-  //   dispatch,
-  //   state: {cart},
-  // } = ShoppingCartState();
-
   const dispatch = useDispatch();
-  const {cart} = useSelector((state) => state.cart);
+  const { cart } = useSelector((state) => state.cart);
 
   return (
     <div className="py-9 flex flex-col gap-5">
       <div className="text-2xl text-center">
-        Sub-total: ${cart.reduce((acc, curr) => acc + curr.price, 0)}
+        Sub-total: ${cart.reduce((acc, curr) => acc + curr.price, 0).toFixed(2)}
       </div>
       {cart.map((prod) => {
         return (
@@ -33,17 +27,9 @@ const Cart = () => {
               <span>$ {prod.price}</span>
             </div>
             <StarRating rating={prod.rating} />
-            {/* add change cart quantity */}
             <button
               className={`px-2 py-1 mt-2 bg-blue-400 text-white border-none rounded-sm disabled:opacity-50`}
-              disabled={!prod.inStock}
-              onClick={() =>
-                // dispatch({
-                //   type: "REMOVE_FROM_CART",
-                //   payload: prod,
-                // })
-                dispatch(removeFromCart(prod))
-              }
+              onClick={() => dispatch(removeFromCart(prod))}
             >
               Remove from Cart
             </button>

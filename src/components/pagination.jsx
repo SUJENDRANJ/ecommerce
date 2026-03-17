@@ -1,55 +1,43 @@
 /* eslint-disable react/prop-types */
-import React from "react";
 
 const Pagination = ({ products, page, setPage }) => {
   const totalPages = Math.ceil(products.length / 10);
 
-  const selectPageHandler = (selectedPage) => {
-    if (
-      selectedPage >= 1 &&
-      selectedPage <= products.length / 10 &&
-      selectedPage !== page
-    ) {
-      setPage(selectedPage);
+  const changePage = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPage(newPage);
     }
   };
 
-  const renderPageKey = (currPage, key) => {
-    return (
-      <span
-        key={key}
-        className={page === currPage ? "pagination__selected" : ""}
-        onClick={() => selectPageHandler(currPage)}
-      >
-        {currPage}
-      </span>
-    );
-  };
-
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(renderPageKey(i));
-    }
-
-    return pageNumbers;
-  };
+  const arr = Array(totalPages)
+    .fill(0)
+    .map((_, i) => i + 1);
 
   return (
     <div className="pagination">
+      {/* Prev */}
       <span
-        onClick={() => selectPageHandler(page - 1)}
-        className={page > 1 ? "" : "pagination__disable"}
+        onClick={() => changePage(page - 1)}
+        className={page === 1 ? "pagination__disable" : ""}
       >
         ◀
       </span>
 
-      {renderPageNumbers()}
+      {/* Page Numbers */}
+      {arr.map((p) => (
+        <span
+          key={p}
+          className={page === p ? "pagination__selected" : ""}
+          onClick={() => changePage(p)}
+        >
+          {p}
+        </span>
+      ))}
 
+      {/* Next */}
       <span
-        onClick={() => selectPageHandler(page + 1)}
-        className={page < products.length / 10 ? "" : "pagination__disable"}
+        onClick={() => changePage(page + 1)}
+        className={page === totalPages ? "pagination__disable" : ""}
       >
         ▶
       </span>

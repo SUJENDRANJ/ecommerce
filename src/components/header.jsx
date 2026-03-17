@@ -1,15 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-// import {ShoppingCartState} from "../context/context";
 import { Link } from "react-router-dom";
 import { filterBySearch } from "../slices/filterSlice";
 
 const Header = () => {
-  // const {
-  //   state: {cart},
-  //   filterState: {searchQuery},
-  //   filterDispatch,
-  // } = ShoppingCartState();
-
   const filterDispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
   const { searchQuery } = useSelector((state) => state.filter);
@@ -23,10 +16,7 @@ const Header = () => {
         type="text"
         placeholder="Search a Product..."
         value={searchQuery}
-        onChange={(e) =>
-          // filterDispatch({type: "FILTER_BY_SEARCH", payload: e.target.value})
-          filterDispatch(filterBySearch(e.target.value))
-        }
+        onChange={(e) => filterDispatch(filterBySearch(e.target.value))}
         className="p-2"
       />
       <Link to="/cart">
