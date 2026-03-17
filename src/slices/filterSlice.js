@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const filterSlice = createSlice({
   name: "filter",
@@ -21,6 +21,7 @@ const filterSlice = createSlice({
       state.searchQuery = action.payload;
     },
     clearFilters(state) {
+      state.sort = "";
       state.byStock = false;
       state.byRating = 0;
       state.searchQuery = "";
